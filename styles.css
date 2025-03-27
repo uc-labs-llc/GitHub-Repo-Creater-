@@ -1,0 +1,83 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin: 20px 0;
+    font-size: 2.5em;
+    text-transform: uppercase;
+}
+.git-form {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.git-form label {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffeb3b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.git-form label.required::after {
+    content: " *";
+    color: #ff4444;
+}
+.git-form input,
+.git-form textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #ffffff;
+    font-size: 1em;
+}
+.git-form input:focus,
+.git-form textarea:focus {
+    outline: none;
+    border-color: #ffeb3b;
+    box-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+}
+.git-form button {
+    margin-top: 20px;
+    padding: 12px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+.git-form #resetButton {
+    background-color: #f44336;
+    margin-top: 10px;
+}
+.git-form button:hover {
+    background-color: #45a049;
+}
+.git-form #resetButton:hover {
+    background-color: #d32f2f;
+}
+#loading {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+    color: #ffffff;
+}
+#message {
+    margin-top: 15px;
+    text-align: center;
+    color: #ffffff;
+}
