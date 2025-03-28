@@ -2,7 +2,10 @@ GitHub Repo Creator
 
 Overview
 
-The GitHub Repo Creator is a simple web-based tool that allows users to create a GitHub repository directly from a browser interface and save repository details and Git commands to a text file. It’s designed for developers who want a quick way to set up a new repo without leaving their browser, with a modern dark-themed UI.
+- **Web (Static)**: Browser-based using HTML/CSS/JS.
+- **Web (Flask)**: Python-powered web app using Flask.
+
+The GitHub Repo Creator is a simple web-based or Python Flask tool that allows users to create a GitHub repository directly from a browser interface and save repository details and Git commands to a text file. It’s designed for developers who want a quick way to set up a new repo without leaving their browser, with a modern dark-themed UI.
 
 Features
 
@@ -16,6 +19,7 @@ Error Handling: Displays success or error messages after repo creation attempts.
 Requirements
 
 Browser: A modern web browser (e.g., Chrome, Firefox, Edge) with JavaScript enabled.
+**Web (Flask)**: Python 3.x, Flask, `requests` library.
 
 GitHub Personal Access Token: A token with repo scope to authenticate API requests (generate one in GitHub Settings > Developer Settings > Personal Access Tokens).
 
@@ -28,11 +32,20 @@ Clone this repository or download the files: index.html, styles.css, script.js, 
 
 File Structure:
 
+
 github-repo-creator/
-├── index.html
-├── styles.css
-├── script.js
+├── web/
+│   ├── index.html
+│   ├── styles.css
+│   ├── script.js
+├── python/
+│   ├── app.py           # Flask app
+│   ├── templates/
+│   │   ├── index.html  # Form template
+│   ├── static/
+│   │   ├── styles.css  # CSS file
 ├── README.md
+
 
 Run a Local Server:
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Creator (Flask)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>GitHub Repo Creator (Flask)</h1>
+    <form id="gitForm" class="git-form" method="POST">
+        <label class="required">Repo Name</label>
+        <input type="text" id="gitRepoName" name="gitRepoName" placeholder="Repo Name (e.g., myproject)" required>
+        <label>Repo URL</label>
+        <input type="text" id="gitRepoUrl" name="gitRepoUrl" placeholder="e.g., https://github.com/user/myproject.git">
+        <label>Branch Name</label>
+        <input type="text" id="gitBranchName" name="gitBranchName" placeholder="e.g., main">
+        <label class="required">Access Token</label>
+        <input type="text" id="gitAccessToken" name="gitAccessToken" placeholder="e.g., ghp_abc123" required>
+        <label>Description (Optional)</label>
+        <textarea id="gitDescription" name="gitDescription" placeholder="Repository Description"></textarea>
+        <label>Private Repository</label>
+        <input type="checkbox" id="gitPrivate" name="gitPrivate">
+        <label>SSH Key Path</label>
+        <input type="text" id="gitSshKeyPath" name="gitSshKeyPath" placeholder="e.g., /home/user/.ssh/id_rsa">
+        <label>SSH Key Content (optional)</label>
+        <textarea id="gitSshKeyContent" name="gitSshKeyContent" placeholder="e.g., ssh-rsa AAAAB3Nza..."></textarea>
+        <label>Clone Command</label>
+        <input type="text" id="gitCloneCommand" name="gitCloneCommand" placeholder="e.g., git clone https://<token>@github.com/...">
+        <label>Remote Name</label>
+        <input type="text" id="gitRemoteName" name="gitRemoteName" placeholder="e.g., origin">
+        <label>Username</label>
+        <input type="text" id="gitUsername" name="gitUsername" placeholder="e.g., user">
+        <label>Email</label>
+        <input type="text" id="gitEmail" name="gitEmail" placeholder="e.g., user@example.com">
+        <label>Last Commit Hash</label>
+        <input type="text" id="gitLastCommit" name="gitLastCommit" placeholder="e.g., a1b2c3d">
+        <label>Notes</label>
+        <textarea id="gitNotes" name="gitNotes" placeholder="e.g., WIP feature branch"></textarea>
+        <button type="submit" id="createRepoButton">Create Repo and Save Notes</button>
+        <button type="reset" id="resetButton">Clear Form</button>
+        <div id="loading" {% if message %}style="display: none;"{% endif %}>Creating repository...</div>
+        {% if message %}
+        <div id="message" style="color: {{ message_color }}">{{ message }}</div>
+        {% else %}
+        <div id="message"></div>
+        {% endif %}
+    </form>
+</body>
+</html>
