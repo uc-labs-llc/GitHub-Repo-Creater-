@@ -1,0 +1,6 @@
+"Package: github-repo-creator
+Version: 1.0-1
+Architecture: all
+Maintainer: UC Labs LLC <uclabs.llc@gmail.com>
+Depends: python3, python3-tk, python3-requests
+Description: A tool to create GitHub repositories with templates"

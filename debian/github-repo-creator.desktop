@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GitHub Repo Creator
+Exec=/usr/share/github-repo-creator/repo_creator.py
+Type=Application
+Icon=/usr/share/icons/github-repo-creator.png
+Categories=Development;
+Terminal=false
+StartupWMClass=GitHub-Repo-Creator
