@@ -6,6 +6,20 @@ Overview
 - **Web (Flask)**: Python-powered web app using Flask.
  - **Web (Tkinter)**: Python-powered  using Tkinter.
 
+
+## Screenshots
+### Web Version
+![Web Version Demo](images/web_demo.png)
+
+### Flask Version
+![Flask Version Demo](images/flask_demo.png)
+
+### Tkinter Version
+![Tkinter Version Demo](images/tkinter_demo.png)
+
+
+
+
 The GitHub Repo Creator is a simple web-based or Python Flask/Tkinter tool that allows users to create a GitHub repository directly from a browser interface and save repository details and Git commands to a text file. It’s designed for developers who want a quick way to set up a new repo without leaving their browser, with a modern dark-themed UI.
 
 Features
