@@ -11,7 +11,7 @@ A versatile tool to streamline GitHub repository creation with three flavors:
 - 🌐 **Web (Static)**: Browser-based with HTML/CSS/JS.
 - 🐍 **Web (Flask)**: Python-powered web app.
 - 💻 **Desktop (Tkinter)**: Python GUI desktop app.
-
+- 📋 Template support: Empty, Python, Node.js
 ## Screenshots
 ### Web Version
 ![Web Version Demo](images/web_demo.png)  
