@@ -2,46 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repo Creator and Note Saver</title>
+    <title>GitHub Repo Creator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>GitHub Repo Creator</h1>
-    <form id="gitForm" class="git-form">
-        <label class="required">Repo Name</label>
-        <input type="text" id="gitRepoName" placeholder="Repo Name (e.g., myproject)" required>
-        <label>Repo URL</label>
-        <input type="text" id="gitRepoUrl" placeholder="e.g., https://github.com/user/myproject.git">
-        <label>Branch Name</label>
-        <input type="text" id="gitBranchName" placeholder="e.g., main">
-        <label class="required">Access Token</label>
-        <input type="text" id="gitAccessToken" placeholder="e.g., ghp_abc123" required>
-        <label>Description (Optional)</label>
-        <textarea id="gitDescription" placeholder="Repository Description"></textarea>
-        <label>Private Repository</label>
-        <input type="checkbox" id="gitPrivate">
-        <label>SSH Key Path</label>
-        <input type="text" id="gitSshKeyPath" placeholder="e.g., /home/user/.ssh/id_rsa">
-        <label>SSH Key Content (optional)</label>
-        <textarea id="gitSshKeyContent" placeholder="e.g., ssh-rsa AAAAB3Nza..."></textarea>
-        <label>Clone Command</label>
-        <input type="text" id="gitCloneCommand" placeholder="e.g., git clone https://<token>@github.com/...">
-        <label>Remote Name</label>
-        <input type="text" id="gitRemoteName" placeholder="e.g., origin">
-        <label>Username</label>
-        <input type="text" id="gitUsername" placeholder="e.g., user">
-        <label>Email</label>
-        <input type="text" id="gitEmail" placeholder="e.g., user@example.com">
-        <label>Last Commit Hash</label>
-        <input type="text" id="gitLastCommit" placeholder="e.g., a1b2c3d">
-        <label>Notes</label>
-        <textarea id="gitNotes" placeholder="e.g., WIP feature branch"></textarea>
-        <button type="button" id="createRepoButton">Create Repo and Save Notes</button>
-        <button type="button" id="resetButton">Clear Form</button>
-        <div id="loading">Creating repository...</div>
-        <div id="message"></div>
-    </form>
+    <div class="container">
+        <h1>GitHub Repo Creator</h1>
+        <form id="repoForm">
+            <label for="gitRepoName">Repo Name <span class="required">*</span></label>
+            <input type="text" id="gitRepoName" name="gitRepoName" required>
+
+            <label for="gitAccessToken">Access Token <span class="required">*</span></label>
+            <input type="password" id="gitAccessToken" name="gitAccessToken" required>
+
+            <label for="gitDescription">Description</label>
+            <textarea id="gitDescription" name="gitDescription"></textarea>
+
+            <label for="template">Template</label>
+            <select id="template" name="template">
+                <option value="empty">Empty</option>
+                <option value="python">Python</option>
+                <option value="nodejs">Node.js</option>
+            </select>
+
+            <label for="isPrivate">Private Repository</label>
+            <input type="checkbox" id="isPrivate" name="isPrivate">
+
+            <button type="submit">Create Repo and Save Notes</button>
+            <button type="reset">Clear Form</button>
+        </form>
+        <p id="status"></p>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,110 +1,119 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, send_file
 import requests
 import io
+import base64
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    error = None
     if request.method == 'POST':
-        # Collect form data
+        # Gather all form data
         repo_name = request.form.get('gitRepoName')
         access_token = request.form.get('gitAccessToken')
+        repo_url = request.form.get('gitRepoUrl', '')
+        branch_name = request.form.get('gitBranchName', '')
         description = request.form.get('gitDescription', '')
-        is_private = 'gitPrivate' in request.form  # Checkbox
+        template = request.form.get('template', 'empty')
+        is_private = request.form.get('isPrivate') == 'on'
+        ssh_key_path = request.form.get('gitSshKeyPath', '')
+        ssh_key_content = request.form.get('gitSshKeyContent', '')
+        clone_command = request.form.get('gitCloneCommand', '')
+        remote_name = request.form.get('gitRemoteName', '')
+        username = request.form.get('gitUsername', '')
+        email = request.form.get('gitEmail', '')
+        last_commit = request.form.get('gitLastCommit', '')
+        notes = request.form.get('gitNotes', '')
 
         if not repo_name or not access_token:
-            return render_template('index.html', message="Repo Name and Access Token are required.", message_color="red")
+            error = "Repo Name and Access Token are required."
+            return render_template('index.html', error=error)
 
-        # GitHub API call
-        headers = {
-            'Authorization': f'token {access_token}',
-            'Accept': 'application/vnd.github.v3+json'
-        }
-        data = {
-            'name': repo_name,
-            'description': description,
-            'private': is_private,
-            'auto_init': True
-        }
+        headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.v3+json'}
+        data = {'name': repo_name, 'description': description, 'private': is_private, 'auto_init': True}
 
         try:
             response = requests.post('https://api.github.com/user/repos', headers=headers, json=data)
             response.raise_for_status()
             repo_data = response.json()
 
-            # Generate file content
-            file_content = generate_file_content(repo_data, request.form)
-            return Response(
-                file_content,
-                mimetype='text/plain',
-                headers={'Content-Disposition': f'attachment; filename={repo_name}_repo_info.txt'}
-            )
-        except requests.RequestException as e:
-            error_msg = e.response.json().get('message', 'Unknown error') if e.response else str(e)
-            return render_template('index.html', message=f"Error: {error_msg}", message_color="red")
+            # Apply template
+            owner = repo_data['owner']['login']
+            templates = {
+                'python': [
+                    {'path': 'README.md', 'content': base64.b64encode(b'# Python Project\nA simple Python project template.').decode('utf-8')},
+                    {'path': '.gitignore', 'content': base64.b64encode(b'__pycache__\n*.pyc\nvenv/').decode('utf-8')}
+                ],
+                'nodejs': [
+                    {'path': 'README.md', 'content': base64.b64encode(b'# Node.js Project\nA simple Node.js project template.').decode('utf-8')},
+                    {'path': '.gitignore', 'content': base64.b64encode(b'node_modules/\n*.log').decode('utf-8')}
+                ]
+            }
 
-    return render_template('index.html', message="", message_color="")
+            if template != 'empty' and template in templates:
+                for file in templates[template]:
+                    requests.put(
+                        f"https://api.github.com/repos/{owner}/{repo_name}/contents/{file['path']}",
+                        headers=headers,
+                        json={
+                            'message': f"Add {file['path']} for {template} template",
+                            'content': file['content']
+                        }
+                    )
 
-def generate_file_content(repo_data, form_data):
-    form_data_dict = {
-        'repoName': form_data.get('gitRepoName', ''),
-        'repoUrl': form_data.get('gitRepoUrl', repo_data['html_url']),
-        'branchName': form_data.get('gitBranchName', 'main'),
-        'accessToken': form_data.get('gitAccessToken', ''),
-        'description': form_data.get('gitDescription', ''),
-        'isPrivate': 'gitPrivate' in form_data,
-        'sshKeyPath': form_data.get('gitSshKeyPath', ''),
-        'sshKeyContent': form_data.get('gitSshKeyContent', ''),
-        'cloneCommand': form_data.get('gitCloneCommand', f"git clone {repo_data['clone_url']}"),
-        'remoteName': form_data.get('gitRemoteName', 'origin'),
-        'username': form_data.get('gitUsername', ''),
-        'email': form_data.get('gitEmail', ''),
-        'lastCommit': form_data.get('gitLastCommit', ''),
-        'notes': form_data.get('gitNotes', ''),
-        'cloneUrl': repo_data['clone_url']
-    }
-
-    content = f"""
+            # Generate detailed content
+            content = f"""
 Repository Details:
-Name: {form_data_dict['repoName']}
-URL: {form_data_dict['repoUrl']}
-Branch Name: {form_data_dict['branchName']}
-Access Token: ***HIDDEN*** (Original: {len(form_data_dict['accessToken'])} chars)
-Description: {form_data_dict['description'] or 'N/A'}
-Private: {form_data_dict['isPrivate']}
-SSH Key Path: {form_data_dict['sshKeyPath'] or 'Not set'}
-SSH Key Content: {form_data_dict['sshKeyContent'] or 'Not set'}
-Clone Command: {form_data_dict['cloneCommand']}
-Remote Name: {form_data_dict['remoteName']}
-Username: {form_data_dict['username'] or 'Not set'}
-Email: {form_data_dict['email'] or 'Not set'}
-Last Commit Hash: {form_data_dict['lastCommit'] or 'N/A'}
-Notes: {form_data_dict['notes'] or 'None'}
+Name: {repo_name}
+URL: {repo_url or repo_data['html_url']}
+Branch Name: {branch_name or 'main'}
+Access Token: ***HIDDEN*** (Original: {len(access_token)} chars)
+Description: {description or 'N/A'}
+Template: {template}
+Private: {is_private}
+SSH Key Path: {ssh_key_path or 'Not set'}
+SSH Key Content: {ssh_key_content or 'Not set'}
+Clone Command: {clone_command or f"git clone {repo_data['clone_url']}"}
+Remote Name: {remote_name or 'origin'}
+Username: {username or 'Not set'}
+Email: {email or 'Not set'}
+Last Commit Hash: {last_commit or 'N/A'}
+Notes: {notes or 'None'}
 GitHub Created URL: {repo_data['html_url']}
 
 Recommended Git Commands:
 # Initialize local repository (if starting fresh)
 git init
-{ f'git config user.name "{form_data_dict["username"]}"' if form_data_dict["username"] else '# git config user.name "YourName"' }
-{ f'git config user.email "{form_data_dict["email"]}"' if form_data_dict["email"] else '# git config user.email "your@email.com"' }
+{ f'git config user.name "{username}"' if username else '# git config user.name "YourName"' }
+{ f'git config user.email "{email}"' if email else '# git config user.email "your@email.com"' }
 # Clone the repository
-{form_data_dict['cloneCommand']}
-cd {form_data_dict['repoName']}
+{clone_command or f"git clone {repo_data['clone_url']}"}
+cd {repo_name}
 # Set up remote
-git remote add {form_data_dict['remoteName']} {form_data_dict['cloneUrl']}
+git remote add {remote_name or 'origin'} {repo_data['clone_url']}
 # Verify remote
 git remote -v
 # Checkout branch (if not default)
-{ f'git checkout -b {form_data_dict["branchName"]}' if form_data_dict["branchName"] != 'main' else '# Default branch is main' }
+{ f'git checkout -b {branch_name}' if branch_name and branch_name != 'main' else '# Default branch is main' }
 # Add SSH key (if provided)
-{ f'ssh-add "{form_data_dict["sshKeyPath"]}"' if form_data_dict["sshKeyPath"] else '# ssh-add ~/.ssh/id_rsa' }
+{ f'ssh-add "{ssh_key_path}"' if ssh_key_path else '# ssh-add ~/.ssh/id_rsa' }
 # Example commit (if initialized locally)
 # git add .
 # git commit -m "Initial commit"
-# git push {form_data_dict['remoteName']} {form_data_dict['branchName']}
-    """.strip()
-    return content
+# git push {remote_name or 'origin'} {branch_name or 'main'}
+            """.strip()
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+            buffer = io.BytesIO(content.encode('utf-8'))
+            buffer.seek(0)
+            return send_file(buffer, as_attachment=True, download_name=f"{repo_name}_repo_info.txt", mimetype='text/plain')
+
+        except requests.RequestException as e:
+            error_msg = e.response.json().get('message', 'Unknown error') if e.response else str(e)
+            error = f"Failed to create repo: {error_msg}"
+            return render_template('index.html', error=error)
+
+    return render_template('index.html', error=error)
+
+if __name__ == "__main__":
+    app.run(debug=True)
