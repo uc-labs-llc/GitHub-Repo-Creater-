@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Repo Creator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,6 +12,12 @@
         <form id="repoForm">
             <label for="gitRepoName">Repo Name <span class="required">*</span></label>
             <input type="text" id="gitRepoName" name="gitRepoName" required>
+
+            <label for="gitRepoUrl">Repo URL</label>
+            <input type="text" id="gitRepoUrl" name="gitRepoUrl">
+
+            <label for="gitBranchName">Branch Name</label>
+            <input type="text" id="gitBranchName" name="gitBranchName">
 
             <label for="gitAccessToken">Access Token <span class="required">*</span></label>
             <input type="password" id="gitAccessToken" name="gitAccessToken" required>
@@ -27,6 +34,30 @@
 
             <label for="isPrivate">Private Repository</label>
             <input type="checkbox" id="isPrivate" name="isPrivate">
+
+            <label for="gitSshKeyPath">SSH Key Path</label>
+            <input type="text" id="gitSshKeyPath" name="gitSshKeyPath">
+
+            <label for="gitSshKeyContent">SSH Key Content</label>
+            <textarea id="gitSshKeyContent" name="gitSshKeyContent"></textarea>
+
+            <label for="gitCloneCommand">Clone Command</label>
+            <input type="text" id="gitCloneCommand" name="gitCloneCommand">
+
+            <label for="gitRemoteName">Remote Name</label>
+            <input type="text" id="gitRemoteName" name="gitRemoteName">
+
+            <label for="gitUsername">Username</label>
+            <input type="text" id="gitUsername" name="gitUsername">
+
+            <label for="gitEmail">Email</label>
+            <input type="text" id="gitEmail" name="gitEmail">
+
+            <label for="gitLastCommit">Last Commit Hash</label>
+            <input type="text" id="gitLastCommit" name="gitLastCommit">
+
+            <label for="gitNotes">Notes</label>
+            <textarea id="gitNotes" name="gitNotes"></textarea>
 
             <button type="submit">Create Repo and Save Notes</button>
             <button type="reset">Clear Form</button>

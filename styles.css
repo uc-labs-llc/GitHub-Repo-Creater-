@@ -1,58 +1,95 @@
 body {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #1a1a1a; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: Arial, sans-serif; /* Clean font */
+    margin: 0; /* No default margins */
+    padding: 20px; /* Outer padding */
 }
+
 .container {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
+    background-color: #333; /* Dark gray form background */
+    padding: 20px; /* Inner padding */
+    border-radius: 8px; /* Rounded corners */
+    max-width: 400px; /* Fixed width for readability */
+    margin: 0 auto; /* Center the container */
 }
+
 h1 {
-    color: #ffeb3b;
-    text-align: center;
+    color: #ffeb3b; /* Bright yellow header */
+    text-align: center; /* Centered title */
+    margin-bottom: 20px; /* Space below header */
 }
+
 label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #ffeb3b;
+    display: block; /* Stack labels vertically */
+    margin: 10px 0 5px; /* Spacing above and below */
+    color: #ffeb3b; /* Yellow labels to match Flask */
+    font-weight: bold; /* Slight emphasis */
 }
+
 .required {
-    color: red;
+    color: red; /* Red asterisk for required fields */
 }
-input[type="text"], input[type="password"], textarea, select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    background-color: #444;
-    border: none;
-    color: #ffffff;
-    border-radius: 4px;
+
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* Full width */
+    padding: 8px; /* Inner padding */
+    margin-bottom: 10px; /* Space between fields */
+    background-color: #444; /* Dark input background */
+    border: none; /* No borders */
+    color: #ffffff; /* White text */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
 }
+
 textarea {
-    height: 60px;
-    resize: none;
+    height: 60px; /* Fixed height for SSH Key Content, Notes */
+    resize: none; /* Prevent resizing */
 }
+
+select {
+    appearance: none; /* Remove default dropdown arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 24px; /* Space for arrow */
+}
+
+input[type="checkbox"] {
+    margin: 0 5px 10px 0; /* Align with label, space below */
+    vertical-align: middle; /* Center with text */
+}
+
 button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    margin: 5px 0;
+    background-color: #4CAF50; /* Green button */
+    color: white; /* White text */
+    padding: 10px; /* Inner padding */
+    border: none; /* No borders */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Hand on hover */
+    width: 100%; /* Full width */
+    margin: 5px 0; /* Space between buttons */
+    font-size: 16px; /* Readable text */
 }
+
 button:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Darker green on hover */
 }
+
+button[type="reset"] {
+    background-color: #f44336; /* Red reset button */
+}
+
+button[type="reset"]:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
 #status {
-    margin-top: 10px;
-    text-align: center;
+    color: white; /* White status text */
+    text-align: center; /* Centered */
+    margin-top: 10px; /* Space above */
+    font-style: italic; /* Subtle emphasis */
 }
