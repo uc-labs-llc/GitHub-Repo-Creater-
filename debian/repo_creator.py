@@ -13,7 +13,7 @@ class GitHubRepoCreator:
         self.root.configure(bg="#1a1a1a")
         self.root.resizable(False, False)
 
-        
+        self.hide_taskbar_icon(self.root.winfo_id()) # Hide the icon        
 
         style = ttk.Style()
         style.theme_use('clam')
